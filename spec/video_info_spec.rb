@@ -60,6 +60,29 @@ describe "VideoInfo" do
     end
   end
 
+  context "from Dailymotion" do
+    describe "Video x52tk6" do
+      use_vcr_cassette "dailymotion/x52tk6"
+
+      subject { VideoInfo.new('http://www.dailymotion.com/video/x52tk6_cherry-bloom-king-of-the-knife_music') }
+
+      its(:provider)         { should == 'Dailymotion' }
+      its(:video_id)         { should == 'x52tk6' }
+      its(:url)              { should == 'http://www.dailymotion.com/video/x52tk6_cherry-bloom-king-of-the-knife_music' }
+      its(:player)           { should == 'http://www.dailymotion.com/swf/video/x52tk6' }
+      its(:title)            { should == 'Cherry Bloom - King Of The Knife' }
+      its(:description)      { should == 'The first video from the upcoming album Secret Sounds, to download in-stores April 14. Checkout www.cherrybloom.netNo producer, no label, no majorJ...' }
+      its(:keywords)         { should == 'country:FR, cherry, bloom, king, the, knife, secret, sounds, rock, alternative, clip' }
+      its(:duration)         { should == 175 }
+      its(:width)            { should == 480 }
+      its(:height)           { should == 276 }
+      its(:date)             { should == Time.parse('Mon, 14 Apr 2008 20:35:02 +0200') }
+      its(:thumbnail_small)  { should == 'http://s1.dmcdn.net/hueh/x240-dPO.jpg' }
+      its(:thumbnail_large)  { should == 'http://s1.dmcdn.net/hueh/x240-dPO.jpg' }
+      it { should be_valid }
+    end
+  end
+
   context "from Vimeo" do
     describe "Video 898029" do
       use_vcr_cassette "vimeo/898029"

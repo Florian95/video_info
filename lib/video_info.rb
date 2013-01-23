@@ -3,6 +3,7 @@ require 'hpricot'
 require 'video_info/version'
 require 'provider/vimeo'
 require 'provider/youtube'
+require 'provider/dailymotion'
 
 class VideoInfo
 
@@ -25,6 +26,8 @@ class VideoInfo
       @video = Youtube.new(url, options)
     when /youtu\.be/
       @video = Youtube.new(url, options)
+    when /dailymotion\.com/
+      @video = Dailymotion.new(url, options)
     end
   end
 
