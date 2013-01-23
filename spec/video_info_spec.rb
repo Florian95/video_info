@@ -74,6 +74,7 @@ describe "VideoInfo" do
       its(:description)      { should == 'The first video from the upcoming album Secret Sounds, to download in-stores April 14. Checkout www.cherrybloom.netNo producer, no label, no majorJ...' }
       its(:keywords)         { should == 'country:FR, cherry, bloom, king, the, knife, secret, sounds, rock, alternative, clip' }
       its(:duration)         { should == 175 }
+      its(:view_count)       { should == 223 }
       its(:width)            { should == 480 }
       its(:height)           { should == 276 }
       its(:date)             { should == Time.parse('Mon, 14 Apr 2008 20:35:02 +0200') }

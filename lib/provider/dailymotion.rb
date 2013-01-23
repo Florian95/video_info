@@ -29,6 +29,7 @@ private
     @thumbnail_small  = doc.search("//media:thumbnail").first[:url]
     @thumbnail_large  = doc.search("//media:thumbnail").last[:url]
     content           = doc.search("//media:content").first
+    @view_count       = doc.search("dm:views").inner_text.to_i
     @player           = "http://www.dailymotion.com/swf/video/#{@video_id}"
   end
 
