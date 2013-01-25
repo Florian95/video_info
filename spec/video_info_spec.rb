@@ -18,7 +18,7 @@ describe "VideoInfo" do
       its(:width)            { should be_nil }
       its(:height)           { should be_nil }
       its(:date)             { should == Time.parse('Sat Apr 12 22:25:35 UTC 2008', Time.now.utc) }
-      its(:thumbnail_small)  { should == 'http://i.ytimg.com/vi/mZqGqE0D0n4/1.jpg' }
+      its(:thumbnail_small)  { should == 'http://i.ytimg.com/vi/mZqGqE0D0n4/3.jpg' }
       its(:thumbnail_large)  { should == 'http://i.ytimg.com/vi/mZqGqE0D0n4/0.jpg' }
       its(:view_count)       { should be > 4000 }
       it { should be_valid }
