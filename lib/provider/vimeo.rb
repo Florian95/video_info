@@ -19,7 +19,7 @@ private
     @url              = doc.search("url").inner_text
     @title            = doc.search("title").inner_text
     @description      = doc.search("description").inner_text
-    @embed_url        = "http://player.vimeo.com/video/#{@video_id}"
+    @embed_url        = "https://player.vimeo.com/video/#{@video_id}"
     @keywords         = doc.search("tags").inner_text
     @duration         = doc.search("duration").inner_text.to_i # seconds
     @width            = doc.search("width").inner_text.to_i
