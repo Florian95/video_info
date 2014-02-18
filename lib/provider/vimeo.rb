@@ -13,8 +13,16 @@ class Vimeo
 
 private
 
+  def fetch_content
+    open("http://vimeo.com/api/v2/video/#{@video_id}.xml", @openURI_options)
+  end
+
+  def content
+    @content ||= fetch_content
+  end
+
   def get_info
-    doc = Hpricot(open("http://vimeo.com/api/v2/video/#{@video_id}.xml", @openURI_options))
+    doc = Nokogiri::XML(content)
     @provider         = "Vimeo"
     @url              = doc.search("url").inner_text
     @title            = doc.search("title").inner_text
