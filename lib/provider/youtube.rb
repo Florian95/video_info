@@ -23,25 +23,31 @@ class Youtube
 
 private
 
+  def fetch_content
+    open("http://gdata.youtube.com/feeds/api/videos/#{@video_id}", @openURI_options)
+  end
+
+  def content
+    @content ||= fetch_content
+  end
+
   def get_info
-    doc = Hpricot(open("http://gdata.youtube.com/feeds/api/videos/#{@video_id}", @openURI_options))
+    doc = Nokogiri::XML(content)
     @provider         = "YouTube"
     @url              = "http://www.youtube.com/watch?v=#{@video_id}"
     @embed_url        = "http://www.youtube.com/embed/#{@video_id}"
-    @title            = doc.search("media:title").inner_text
-    @description      = doc.search("media:description").inner_text
-    @keywords         = doc.search("media:keywords").inner_text
-    @duration         = doc.search("yt:duration").first[:seconds].to_i
-    @date             = Time.parse(doc.search("published").inner_text, Time.now.utc)
-    @thumbnail_small  = doc.search("media:thumbnail").last[:url]
-    @thumbnail_large  = doc.search("media:thumbnail").first[:url]
+    @title            = doc.at_xpath('//media:title').text
+    @description      = doc.at_xpath('//media:description').text
+    @keywords         = doc.at_xpath('//media:keywords').text
+    @duration         = doc.at_xpath('//yt:duration').attr('seconds').to_i
+    published_at      = doc.search('published').first.text
+    @date             = Time.parse(published_at, Time.now.utc)
+    thumbnails = doc.xpath('//media:thumbnail')
+    @thumbnail_small  = thumbnails.last['url']
+    @thumbnail_large  = thumbnails.first['url']
     # when your video still has no view, yt:statistics is not returned by Youtube
     # see: https://github.com/thibaudgg/video_info/issues#issue/2
-    if doc.search("yt:statistics").first
-      @view_count     = doc.search("yt:statistics").first[:viewcount].to_i
-    else
-      @view_count     = 0
-    end
+    @view_count = doc.at_xpath('//yt:statistics').nil? ? 0 : doc.at_xpath('//yt:statistics')['viewCount'].to_i
   end
 
 end
