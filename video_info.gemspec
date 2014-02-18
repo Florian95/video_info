@@ -14,7 +14,8 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "video_info"
 
-  s.add_dependency 'hpricot', '~> 0.8.4'
+  # s.add_dependency 'hpricot', '~> 0.8.4'
+  s.add_dependency 'nokogiri', '~> 1.6.1'
 
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'rspec', '~> 2.8'
