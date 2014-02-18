@@ -14,9 +14,16 @@ class Dailymotion
 
 private
 
-  def get_info
-    doc = Hpricot(open("http://www.dailymotion.com/rss/video/#{@video_id}", @openURI_options))
+  def fetch_content
+    open("http://www.dailymotion.com/rss/video/#{@video_id}", @openURI_options)
+  end
 
+  def content
+    @content ||= fetch_content
+  end
+
+  def get_info
+    doc = Nokogiri::XML(content)
     @provider         = "Dailymotion"
     @url              = doc.search("guid").inner_text
     @title            = doc.search("//media:title").inner_text
@@ -29,7 +36,7 @@ private
     @thumbnail_small  = doc.search("//media:thumbnail").first[:url]
     @thumbnail_large  = doc.search("//media:thumbnail").last[:url]
     content           = doc.search("//media:content").first
-    @view_count       = doc.search("dm:views").inner_text.to_i
+    @view_count       = doc.search("//dm:views").inner_text.to_i
     @player           = "http://www.dailymotion.com/swf/video/#{@video_id}"
   end
 
